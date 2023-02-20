@@ -1,0 +1,5 @@
+POSTGRESQL_DB_URL=jdbc:postgresql://localhost:5432/databaseName
+
+POSTGRESQL_DB_USER_NAME=postgresUserName
+
+POSTGRESQL_DB_USER_PASSWORD=postgresUserPassword
