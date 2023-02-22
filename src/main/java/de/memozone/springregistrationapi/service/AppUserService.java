@@ -7,4 +7,6 @@ public interface AppUserService {
     AppUser registerUser(AppUserModel appUserModel);
 
     void saveVerificationTokenForUser(String token, AppUser appUser);
+
+    String valideVerificationToken(String token);
 }

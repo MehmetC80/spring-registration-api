@@ -12,10 +12,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-  private static final String[] WHITE_LIST_URLS = {
-         "/api/register"
-  };
-
 
   @Bean
     public PasswordEncoder passwordEncoder(){
@@ -33,7 +29,7 @@ public class WebSecurityConfig {
             .csrf()
             .disable()
             .authorizeHttpRequests()
-            .requestMatchers(WHITE_LIST_URLS)
+            .requestMatchers("/api/register/**")
             .permitAll();
     return http.build();
 

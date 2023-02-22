@@ -8,10 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -35,6 +32,19 @@ public class RegistrationController {
 
         return "Registration Successful!";
     }
+
+    @GetMapping("register/verifyRegistration")
+public String verifyRegistration(@RequestParam("token") String token){
+        String result = appUserService.valideVerificationToken(token);
+
+        if(result.equalsIgnoreCase("valid")){
+            return "User Verifies Successfully!";
+        }else{
+            return "Bad User!!!";
+        }
+    }
+
+
 
     private String applicationUrl(HttpServletRequest request){
 

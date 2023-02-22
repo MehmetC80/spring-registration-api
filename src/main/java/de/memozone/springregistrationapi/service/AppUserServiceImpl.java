@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+
 @Service
 public class AppUserServiceImpl implements AppUserService {
     @Autowired
@@ -42,5 +44,25 @@ public class AppUserServiceImpl implements AppUserService {
         VerificationToken verificationToken = new VerificationToken(token,appUser);
 
         verificationTokenRepository.save(verificationToken);
+    }
+
+    @Override
+    public String valideVerificationToken(String token) {
+        VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
+
+        if(verificationToken == null){
+            return "invalid token";
+        }
+
+        AppUser appUser = verificationToken.getAppUser();
+        Calendar calendar = Calendar.getInstance();
+
+        if(verificationToken.getExpirationTime().getTime() - calendar.getTime().getTime() <= 0){
+            verificationTokenRepository.delete(verificationToken);
+            return "expired token";
+        }
+        appUser.setEnabled(true);
+        appUserRepository.save(appUser);
+        return "valid";
     }
 }
